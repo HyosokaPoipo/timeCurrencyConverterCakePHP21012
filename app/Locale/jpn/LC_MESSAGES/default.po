@@ -1,0 +1,2 @@
+msgid "goodDay"
+msgstr "良い一日"
