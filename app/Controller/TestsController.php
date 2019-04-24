@@ -157,6 +157,22 @@ class TestsController extends AppController {
 	public function utilConverterFromHelper() {
 
 	}
+
+	public function utilConverterFromBehavior() {
+		$this->Test->initConverter('ja_JP', 'Asia/Tokyo', 'JPY');
+		$this->set('jpCurr', $this->Test->utilConverterCurrency(23456789901.123456));
+		$this->set('jpDate', $this->Test->utilConverterDate(new DateTime));
+
+
+		$this->Test->initConverter('id_ID', 'Asia/Jakarta', 'IDR');	
+		$this->set('idrCurr', $this->Test->utilConverterCurrency(23456789901.123456));
+		$this->set('idrDate', $this->Test->utilConverterDate(new DateTime));
+
+
+		$this->Test->initConverter('en_US', 'America/New_York', 'USD');	
+		$this->set('usCurr', $this->Test->utilConverterCurrency(23456789901.123456));
+		$this->set('usDate', $this->Test->utilConverterDate(new DateTime));
+	}
 }
 
 
