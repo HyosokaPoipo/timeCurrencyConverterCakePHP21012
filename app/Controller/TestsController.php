@@ -152,6 +152,11 @@ class TestsController extends AppController {
 		$this->set('usCurr', $this->Converter->utilConverterCurrency(23456789901.123456));
 		$this->set('usDate', $this->Converter->utilConverterDate(new DateTime));
 	}
+
+
+	public function utilConverterFromHelper() {
+
+	}
 }
 
 
