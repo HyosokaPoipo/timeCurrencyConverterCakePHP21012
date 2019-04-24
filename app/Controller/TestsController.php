@@ -35,8 +35,8 @@ class TestsController extends AppController {
  *
  * @var array
  */
-	public $uses = array();
-	public $components = ['ConverterUtil'];	
+	var $uses = ['Test'];
+	public $components = ['Converter'];	
 	public $helpers = ['Converter'];
 
 
@@ -82,8 +82,8 @@ class TestsController extends AppController {
 	}
 
 	public function index() {
-		$this->ConverterUtil->init('ja_JP', 'Asia/Tokyo', 'JPY');
-		$test = $this->ConverterUtil->convertCurrency(123456.788);
+		$this->Converter->init('ja_JP', 'Asia/Tokyo', 'JPY');
+		$test = $this->Converter->convertCurrency(123456.788);
 		debug($test);
 		$date = new DateTime;
 		$today = CakeTime::isToday($date);
@@ -140,6 +140,22 @@ class TestsController extends AppController {
 
 	public function helperTest() {
 
+	}
+
+	public function converterModel() {
+		$this->Test->initConverter('ja_JP', 'Asia/Tokyo', 'JPY');
+		$this->set('jpCurr', $this->Test->convertCurrency(23456789901.123456));
+		$this->set('jpDate', $this->Test->convertDate(new DateTime));
+
+
+		$this->Test->initConverter('id_ID', 'Asia/Jakarta', 'IDR');	
+		$this->set('idrCurr', $this->Test->convertCurrency(23456789901.123456));
+		$this->set('idrDate', $this->Test->convertDate(new DateTime));
+
+
+		$this->Test->initConverter('en_US', 'America/New_York', 'USD');	
+		$this->set('usCurr', $this->Test->convertCurrency(23456789901.123456));
+		$this->set('usDate', $this->Test->convertDate(new DateTime));
 	}
 }
 

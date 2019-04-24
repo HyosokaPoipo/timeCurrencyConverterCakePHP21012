@@ -67,11 +67,11 @@
 class DATABASE_CONFIG {
 
 	public $default = array(
-		'datasource' => 'Database/Mysql',
+		'datasource' => 'Database/Postgres',
 		'persistent' => false,
 		'host' => 'localhost',
-		'login' => 'user',
-		'password' => 'password',
+		'login' => 'postgres',
+		'password' => 'hbp135',
 		'database' => 'database_name',
 		'prefix' => '',
 		//'encoding' => 'utf8',
