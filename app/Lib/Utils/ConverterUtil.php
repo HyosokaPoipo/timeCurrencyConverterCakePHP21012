@@ -10,10 +10,11 @@ class ConverterUtil {
 		$this->locale = $locale;
 		$this->timezone = $timezone;
 		$this->currency = $currency;
-		setlocale(LC_ALL, $locale);
+		setlocale(LC_ALL, $this->locale);		
+		CakeNumber::AddFormat('IDR', array('before' => 'Rp ', 'thousands' => '.', 'decimals' => ','));
 	}
 
-	public function convertCurrency($currencyAmount) {
+	public function convertCurrency($currencyAmount) {		
 		return CakeNumber::currency($currencyAmount, $this->currency);
 	}
 

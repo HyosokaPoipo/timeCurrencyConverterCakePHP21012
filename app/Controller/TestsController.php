@@ -123,12 +123,13 @@ class TestsController extends AppController {
 		$this->set('jpCurr', $test);
 		$this->set('jpDate', $converter->convertDate(new DateTime));
 
-
+		$converter = new ConverterUtil();
 		$converter->init('id_ID', 'Asia/Jakarta', 'IDR');		
 		$this->set('idrCurr', $converter->convertCurrency(23456789901.123456));
 		$this->set('idrDate', $converter->convertDate(new DateTime));
 
-		$this->Converter->init('en_US', 'America/New_York', 'USD');	
+		$converter = new ConverterUtil();
+		$converter->init('en_US', 'America/New_York', 'USD');	
 		$this->set('usCurr', $converter->convertCurrency(23456789901.123456));
 		$this->set('usDate', $converter->convertDate(new DateTime));
 	}
