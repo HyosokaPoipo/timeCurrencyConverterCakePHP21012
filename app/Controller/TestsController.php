@@ -96,7 +96,6 @@ class TestsController extends AppController {
 
 	}
 
-
 	public function helperTest() {
 
 	}

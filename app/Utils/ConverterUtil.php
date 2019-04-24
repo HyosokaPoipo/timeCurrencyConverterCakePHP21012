@@ -6,10 +6,6 @@ class ConverterUtil {
 	private $locale;
 	private $currency;
 
-	public function test() {
-		debug("hellow from ConverterUtil");
-	}
-
 	public function init($locale, $timezone, $currency) {
 		$this->locale = $locale;
 		$this->timezone = $timezone;

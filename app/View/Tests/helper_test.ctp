@@ -20,6 +20,4 @@
 	echo "<br>";
 	echo $this->Converter->convertDate(new DateTime);
 	echo "<br><br>";
-
-
 ?>

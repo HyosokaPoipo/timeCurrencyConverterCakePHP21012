@@ -9,10 +9,6 @@ class ConverterComponent extends Component
 	private $currency;
 	private $utilConverter;
 
-	public function test() {
-		debug("hellow from compoennt");
-	}
-
 	public function init($locale, $timezone, $currency) {
 		$this->locale = $locale;
 		$this->timezone = $timezone;
