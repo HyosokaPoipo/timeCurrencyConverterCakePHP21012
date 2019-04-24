@@ -1,5 +1,5 @@
 <?php
-App::import('Utils', 'ConverterUtil');
+App::uses('ConverterUtil', 'Lib'.DS.'Utils');
 App::uses('CakeTime', 'Utility');
 App::uses('CakeNumber', 'Utility');
 class ConverterComponent extends Component

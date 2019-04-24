@@ -21,7 +21,7 @@
 App::uses('CakeTime', 'Utility');
 App::uses('CakeNumber', 'Utility');
 App::uses('Helper', 'View');
-App::import('Utils', 'ConverterUtil');
+App::uses('ConverterUtil', 'Lib'.DS.'Utils');
 
 /**
  * Application helper

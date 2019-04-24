@@ -19,7 +19,7 @@
  */
 
 App::uses('AppController', 'Controller');
-App::import('Utils', 'ConverterUtil');
+App::uses('ConverterUtil', 'Lib'.DS.'Utils');
 
 /**
  * Static content controller

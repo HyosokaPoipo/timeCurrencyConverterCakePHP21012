@@ -1,7 +1,7 @@
 <?php
 App::uses('CakeTime', 'Utility');
 App::uses('CakeNumber', 'Utility');
-App::import('Utils', 'ConverterUtil');
+App::uses('ConverterUtil', 'Lib'.DS.'Utils');
 class ConverterBehavior extends ModelBehavior {
 	private $timezone;
 	private $locale;
