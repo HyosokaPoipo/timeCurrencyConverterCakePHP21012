@@ -135,7 +135,22 @@ class TestsController extends AppController {
 	}
 
 	public function utilView() {
-		
+
+	}
+
+
+	public function utilConverterFromComponent() {
+		$this->Converter->init('ja_JP', 'Asia/Tokyo', 'JPY');	
+		$this->set('jpCurr', $this->Converter->utilConverterCurrency(123456.788));
+		$this->set('jpDate', $this->Converter->utilConverterDate(new DateTime));
+
+		$this->Converter->init('id_ID', 'Asia/Jakarta', 'IDR');		
+		$this->set('idCurr', $this->Converter->utilConverterCurrency(23456789901.123456));
+		$this->set('idDate', $this->Converter->utilConverterDate(new DateTime));
+
+		$this->Converter->init('en_US', 'America/New_York', 'USD');	
+		$this->set('usCurr', $this->Converter->utilConverterCurrency(23456789901.123456));
+		$this->set('usDate', $this->Converter->utilConverterDate(new DateTime));
 	}
 }
 
