@@ -32,13 +32,24 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
-		echo $this->fetch('script');
+		echo $this->fetch('script');		
 	?>
+
+  	<?php echo $this->Html->script('jquery-3.4.0.js');?>
+  	<?php echo $this->Html->script('jquery-ui.min.js');?>
+  	<?php echo $this->Html->script('popper.min.js');?>
+  	<?php echo $this->Html->script('bootstrap.min.js');?>
+	<?php echo $this->Html->script('moment.js');?>
+	<?php echo $this->Html->css('jquery-ui.min.css');?>
+	<?php echo $this->Html->css('bootstrap.min.css');?>
+	<!-- <?php echo $this->Html->css('bootstrap-datetimepicker.min.css');?> -->
+	<?php echo $this->Html->css('all.min.css');?>
+	
 </head>
 <body>
 	<div id="container">
 		<div id="header">
-			<h1><?php echo $this->Html->link($cakeDescription, 'https://cakephp.org'); ?></h1>
+			<!-- <h1><?php echo $this->Html->link($cakeDescription, 'https://cakephp.org'); ?></h1> -->
 		</div>
 		<div id="content">
 
