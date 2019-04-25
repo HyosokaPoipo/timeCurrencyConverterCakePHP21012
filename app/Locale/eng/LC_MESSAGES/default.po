@@ -1,2 +1,20 @@
-msgid "goodDay"
+msgid "GoodDay"
 msgstr "Good day !"
+
+
+msgid "ChooseLanguage"
+msgstr "Choose Language"
+
+
+msgid "PickupDate"
+msgstr "Pickup Date :"
+
+msgid "PutMoneyAmount"
+msgstr "Put Money Amount :"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Cancel"
+msgstr "Cancel"
+

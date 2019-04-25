@@ -1,2 +1,19 @@
-msgid "goodDay"
+msgid "GoodDay"
 msgstr "Selamat siang !"
+
+
+msgid "ChooseLanguage"
+msgstr "Ganti Bahasa"
+
+
+msgid "PickupDate"
+msgstr "Pilih Tanggal :"
+
+msgid "PutMoneyAmount"
+msgstr "Input Jumlah Uang :"
+
+msgid "Save"
+msgstr "Simpan"
+
+msgid "Cancel"
+msgstr "Batal"

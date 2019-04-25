@@ -1,2 +1,20 @@
-msgid "goodDay"
+msgid "GoodDay"
 msgstr "良い一日"
+
+
+
+msgid "ChooseLanguage"
+msgstr "言語を選択"
+
+
+msgid "PickupDate"
+msgstr "受取日 :"
+
+msgid "PutMoneyAmount"
+msgstr "お金を入れる :"
+
+msgid "Save"
+msgstr "救う"
+
+msgid "Cancel"
+msgstr "取り消す"

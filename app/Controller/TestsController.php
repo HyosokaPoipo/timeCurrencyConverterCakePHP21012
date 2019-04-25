@@ -117,19 +117,52 @@ class TestsController extends AppController {
 	}
 
 	public function converterUtil() {
-		$converter = new ConverterUtil();
-		$converter->init('ja_JP', 'Asia/Tokyo', 'JPY');	
-		$test = $converter->convertCurrency(123456.788);
-		$this->set('jpCurr', $test);
-		$this->set('jpDate', $converter->convertDate(new DateTime));
+		$this->log('***********************awal dari converter util******************************');
+		// $converter = new ConverterUtil();
+		// $converter->init('ja_JP', 'Asia/Tokyo', 'JPY');	
+		// $test = $converter->convertCurrency(123456.788);
+		// $this->set('jpCurr', $test);
+		// $this->set('jpDate', $converter->convertDate(new DateTime));
 
-		$converter->init('id_ID', 'Asia/Jakarta', 'IDR');		
-		$this->set('idrCurr', $converter->convertCurrency(23456789901.123456));
-		$this->set('idrDate', $converter->convertDate(new DateTime));
+		// $converter->init('id_ID', 'Asia/Jakarta', 'IDR');		
+		// $this->set('idrCurr', $converter->convertCurrency(23456789901.123456));
+		// $this->set('idrDate', $converter->convertDate(new DateTime));
 		
-		$converter->init('en_US', 'America/New_York', 'USD');	
-		$this->set('usCurr', $converter->convertCurrency(23456789901.123456));
-		$this->set('usDate', $converter->convertDate(new DateTime));
+		// $converter->init('en_US', 'America/New_York', 'USD');	
+		// $this->set('usCurr', $converter->convertCurrency(23456789901.123456));
+		// $this->set('usDate', $converter->convertDate(new DateTime));
+		$this->log('***********************akhir dari converter util******************************');
+
+
+		if (!empty($this->params['pass'][0])) {
+			switch ($this->params['pass'][0]) {
+				case 'jpn':
+					Configure::write('Config.language','jpn');
+					break;
+				case 'idn':
+					Configure::write('Config.language','idn');
+					break;
+				case 'eng':
+					Configure::write('Config.language','eng');
+					break;	
+				default:
+					Configure::write('Config.language','eng');
+					break;
+			}
+		}else {
+			debug('empty');
+		}
+	}
+
+	public function changeLanguage(){
+		$this->log("bahasa ========================= " .$this->request->data('locale'));
+		Configure::write('Config.language', $this->request->data('locale'));
+		// setlocale(LC_ALL, $this->request->data('locale'));
+		sleep(3);
+		$this->response->body('ok');
+		$this->response->send();
+		debug(Configure::read('Config.language'));
+		$this->_stop();
 	}
 
 	public function utilView() {

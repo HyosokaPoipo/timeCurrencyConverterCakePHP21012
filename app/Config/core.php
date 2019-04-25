@@ -19,7 +19,7 @@
  */
 
 // setLocale(LC_ALL, 'eng');
-Configure::write('Config.language', 'idn');
+// Configure::write('Config.language', 'eng');
 // setlocale(LC_TIME, "ja_JP.UTF-8");
 // setlocale(LC_TIME,"id_ID.UTF-8");
 // setlocale(LC_TIME, "en_US");
