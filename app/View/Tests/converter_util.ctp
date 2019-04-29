@@ -33,8 +33,8 @@ $url = $this->request->base . '/tests/converterUtil';
 
 <div class="form-group">
  <label ><?php echo __('PickupDate') ;?></label>
- <input type="date" name="bday" max="3000-12-31" 
-        min="1000-01-01" class="form-control">
+ <input id="input-date" type="date" name="bday" max="3000-12-31" 
+        min="1000-01-01" class="form-control" placeholder="">
 </div>
 <!-- <div class="form-group">
  <label >Einde voorverkoop periode</label>
@@ -47,9 +47,36 @@ $url = $this->request->base . '/tests/converterUtil';
 </div>
 
 <div class="text-right">
-	<button type="button" class="btn btn-warning mr-2"><?php echo __('Cancel') ;?></button>
-	<button type="button" class="btn btn-primary"><?php echo __('Save') ;?></button>
+	<button type="button" class="btn btn-warning mr-2" onclick="cancelTest()"><?php echo __('Cancel') ;?></button>
+	<button onclick="saveTest(); return false;" type="button" class="btn btn-primary"><?php echo __('Save') ;?></button>
 </div>
+
+<div>
+	<table id="soap_table" style="margin-top: 80px; color: black;">
+		<tr class="bg-info">
+			<td style="text-align: center;"> <?php echo __('No') ;?> </td>
+			<td style="text-align: center;"> <?php echo __('Date') ;?> </td>
+			<td style="text-align: center;"> <?php echo __('Curreny') ;?> </td>
+		</tr>
+	<?php 
+		$no = 0;
+		foreach ($test_data as $key => $data) {
+			foreach ($data as $key => $core_data) {
+			$no++;
+	?>
+		<tr>
+			<td style="text-align: center;"> <?php echo $no ;?> </td>
+			<td style="text-align: center;"> <?php echo $core_data['date_input'] ;?> </td>
+			<td style="text-align: center;"> <?php echo $core_data['currency_amount'] ;?> </td>
+		</tr>
+	<?php		
+			}		
+		}
+	?>
+	</table>
+</div>
+
+
 
 <!-- ************************************** --->
 <!-- <script type="text/javascript">
@@ -89,5 +116,35 @@ $( function() {
 			}
 			, cache: false
 		});
+	}
+
+
+	function saveTest() {
+		// e.preventDefault();
+		alert('starting save');
+
+		var param = {
+			'date_input': $('#input-date').val(),
+			'currency_amount': $("input:text").val()
+		};
+		$.ajax({
+			type: "POST"
+			, data: {'content': param}
+			, url: "<?php echo $this->request->base.'/tests/saveTests'?>"
+			// , dataType: "json"
+			, success: function (res) {	
+				alert('save okie');
+			}
+			, error: function (err) {
+				console.log(err);
+				alert('Gagal menyimpan data');
+			}
+			, cache: false
+		});
+	}
+	
+	function cancelTest() {
+		$('input-date').val('');
+		$( "input:text" ).val('');
 	}
 </script>

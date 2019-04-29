@@ -18,3 +18,13 @@ msgstr "Save"
 msgid "Cancel"
 msgstr "Cancel"
 
+msgid "No"
+msgstr "No"
+
+msgid "Date"
+msgstr "Date"
+
+
+msgid "Currency"
+msgstr "Currency"
+

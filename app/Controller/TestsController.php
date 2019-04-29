@@ -134,24 +134,33 @@ class TestsController extends AppController {
 		$this->log('***********************akhir dari converter util******************************');
 
 
+		$converter = new ConverterUtil();
 		if (!empty($this->params['pass'][0])) {
 			switch ($this->params['pass'][0]) {
 				case 'jpn':
 					Configure::write('Config.language','jpn');
+					$converter->init('ja_JP', 'Asia/Tokyo', 'JPY');	
 					break;
 				case 'idn':
 					Configure::write('Config.language','idn');
+					$converter->init('id_ID', 'Asia/Jakarta', 'IDR');
 					break;
 				case 'eng':
 					Configure::write('Config.language','eng');
+					$converter->init('en_US', 'America/New_York', 'USD');
 					break;	
 				default:
 					Configure::write('Config.language','eng');
+					$converter->init('en_US', 'America/New_York', 'USD');
 					break;
 			}
 		}else {
 			debug('empty');
 		}
+		$testData = $this->Test->find('all');
+		// debug($testData);
+		$this->set('test_data', $testData);
+
 	}
 
 	public function changeLanguage(){
@@ -162,6 +171,14 @@ class TestsController extends AppController {
 		$this->response->body('ok');
 		$this->response->send();
 		debug(Configure::read('Config.language'));
+		$this->_stop();
+	}
+
+	public function saveTests() {
+		$this->log($this->request->data('content'));
+		$this->Test->save($this->request->data('content'));
+		$this->response->body('ok');
+		$this->response->send();
 		$this->_stop();
 	}
 

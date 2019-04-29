@@ -38,10 +38,10 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
   	<?php echo $this->Html->script('jquery-3.4.0.js');?>
   	<?php echo $this->Html->script('jquery-ui.min.js');?>
   	<?php echo $this->Html->script('popper.min.js');?>
-  	<?php echo $this->Html->script('bootstrap.min.js');?>
+  	<?php echo $this->Html->script('bootstrap.js');?>
 	<?php echo $this->Html->script('moment.js');?>
 	<?php echo $this->Html->css('jquery-ui.min.css');?>
-	<?php echo $this->Html->css('bootstrap.min.css');?>
+	<?php echo $this->Html->css('bootstrap.css');?>
 	<!-- <?php echo $this->Html->css('bootstrap-datetimepicker.min.css');?> -->
 	<?php echo $this->Html->css('all.min.css');?>
 	
@@ -69,6 +69,6 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 			</p>
 		</div>
 	</div>
-	<?php echo $this->element('sql_dump'); ?>
+	<!-- <?php echo $this->element('sql_dump'); ?> -->
 </body>
 </html>

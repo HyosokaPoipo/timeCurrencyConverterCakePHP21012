@@ -17,3 +17,13 @@ msgstr "Simpan"
 
 msgid "Cancel"
 msgstr "Batal"
+
+msgid "No"
+msgstr "No"
+
+msgid "Date"
+msgstr "Tanggal"
+
+
+msgid "Currency"
+msgstr "Uang"

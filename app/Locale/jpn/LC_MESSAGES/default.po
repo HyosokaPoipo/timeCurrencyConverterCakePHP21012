@@ -18,3 +18,14 @@ msgstr "救う"
 
 msgid "Cancel"
 msgstr "取り消す"
+
+
+msgid "No"
+msgstr "ノー"
+
+msgid "Date"
+msgstr "日付"
+
+
+msgid "Currency"
+msgstr "通貨"
