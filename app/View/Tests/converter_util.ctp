@@ -19,6 +19,20 @@ $url = $this->request->base . '/tests/converterUtil';
 
 ?>
 
+<style type="text/css">
+	.red {
+  		color: red;
+	}
+
+	.green {
+		color: red;
+	}
+
+	input:focus { 
+	  border-color: #ced4da;
+	}
+</style>
+
 <div class="dropdown show text-right">
   <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     <?php echo __('ChooseLanguage') ;?>
@@ -78,6 +92,25 @@ $url = $this->request->base . '/tests/converterUtil';
 </div>
 
 
+<div id="myModal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="modalTitle" class="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="modalContent"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <!-- ************************************** --->
 <!-- <script type="text/javascript">
@@ -95,6 +128,14 @@ $( function() {
 
 
 <script type="text/javascript">
+	$( document ).ready(function() {
+    	$( "input:text" ).focus(function() {
+		  $( "input:text" ).css("border-color", '#ced4da');
+		});
+		$('#input-date').focus(function() {
+		  $('#input-date').css("border-color", '#ced4da');
+		});
+	});
 	function changeLanguage(e, locale) {
 		e.preventDefault();
 		console.log(locale);
@@ -121,9 +162,6 @@ $( function() {
 
 
 	function saveTest() {
-		// e.preventDefault();
-		alert('starting save');
-
 		var param = {
 			'date_input': $('#input-date').val(),
 			'currency_amount': $("input:text").val()
@@ -132,20 +170,37 @@ $( function() {
 			type: "POST"
 			, data: {'content': param}
 			, url: "<?php echo $this->request->base.'/tests/saveTests'?>"
-			// , dataType: "json"
 			, success: function (res) {	
-				alert('save okie');
+				$('#modalTitle').text('Success');
+				$('#modalContent').text("sukses");			
+				$('#myModal').modal('show');
 			}
 			, error: function (err) {
-				console.log(err);
-				alert('Gagal menyimpan data');
+				var errorRaw = JSON.parse(JSON.stringify(err));
+				var errMsg = JSON.parse(errorRaw.responseText);
+				console.log(errMsg['currency_amount']);
+				var displayedText = '';
+				if (typeof(errMsg['date_input']) !== 'undefined') {
+					$("#input-date").css("border-color", 'red');
+					displayedText = "- " + errMsg['date_input']+"<br>";
+				}
+
+				if (typeof(errMsg['currency_amount']) !== 'undefined') {
+					$("input:text").css("border-color", 'red');
+					displayedText += "- " + errMsg['currency_amount'];
+				}
+				
+				$('#modalTitle').text('Error');
+				$('#modalContent').html(displayedText);	
+				// $('#modalTitle').css('color', 'red');
+				$('#myModal').modal('show');
 			}
 			, cache: false
 		});
 	}
 	
 	function cancelTest() {
-		$('input-date').val('');
+		$('#input-date').val('');
 		$( "input:text" ).val('');
 	}
 </script>

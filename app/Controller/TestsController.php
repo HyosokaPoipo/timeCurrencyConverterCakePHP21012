@@ -192,9 +192,19 @@ class TestsController extends AppController {
 	}
 
 	public function saveTests() {
-		$this->log($this->request->data('content'));
-		$this->Test->save($this->request->data('content'));
-		$this->response->body('ok');
+		$msg = 'ok';
+		$this->Test->set($this->request->data('content'));
+
+		$this->response->type('json');
+		if ($this->Test->validates()) {
+			$this->Test->save($this->request->data('content'));
+			$this->response->statusCode(200);	
+		} else {
+			// $this->Session->setFlash($this->Device->validationErrors);
+			$msg = $this->Test->validationErrors;
+			$this->response->statusCode(400);
+		}
+		$this->response->body(json_encode($msg));
 		$this->response->send();
 		$this->_stop();
 	}
