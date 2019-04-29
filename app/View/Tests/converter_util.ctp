@@ -59,6 +59,7 @@ $url = $this->request->base . '/tests/converterUtil';
 			<td style="text-align: center;"> <?php echo __('Curreny') ;?> </td>
 		</tr>
 	<?php 
+		$this->Converter->init($locale, $timezone, $curr);
 		$no = 0;
 		foreach ($test_data as $key => $data) {
 			foreach ($data as $key => $core_data) {
@@ -66,8 +67,8 @@ $url = $this->request->base . '/tests/converterUtil';
 	?>
 		<tr>
 			<td style="text-align: center;"> <?php echo $no ;?> </td>
-			<td style="text-align: center;"> <?php echo $core_data['date_input'] ;?> </td>
-			<td style="text-align: center;"> <?php echo $core_data['currency_amount'] ;?> </td>
+			<td style="text-align: center;"> <?php echo $this->Converter->convertDate($core_data['date_input']) ;?> </td>
+			<td style="text-align: center;"> <?php echo $this->Converter->convertCurrency($core_data['currency_amount']) ;?> </td>
 		</tr>
 	<?php		
 			}		

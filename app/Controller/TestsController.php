@@ -135,31 +135,48 @@ class TestsController extends AppController {
 
 
 		$converter = new ConverterUtil();
+		$locale = 'en_US';
+		$timezone =  'America/New_York';
+		$curr = 'USD';
 		if (!empty($this->params['pass'][0])) {
 			switch ($this->params['pass'][0]) {
 				case 'jpn':
 					Configure::write('Config.language','jpn');
-					$converter->init('ja_JP', 'Asia/Tokyo', 'JPY');	
+					$locale = 'ja_jp';
+					$timezone =  'Asia/Tokyo';
+					$curr = 'jpn';
 					break;
 				case 'idn':
 					Configure::write('Config.language','idn');
-					$converter->init('id_ID', 'Asia/Jakarta', 'IDR');
+					$locale = 'id_ID';
+					$timezone =  'Asia/Jakarta';
+					$curr = 'IDR';
 					break;
 				case 'eng':
 					Configure::write('Config.language','eng');
-					$converter->init('en_US', 'America/New_York', 'USD');
+					$locale = 'en_US';
+					$timezone =  'America/New_York';
+					$curr = 'USD';
 					break;	
 				default:
 					Configure::write('Config.language','eng');
-					$converter->init('en_US', 'America/New_York', 'USD');
+					$locale = 'en_US';
+					$timezone =  'America/New_York';
+					$curr = 'USD';
 					break;
 			}
+
+			$converter->init($locale, $timezone, $curr);
+
 		}else {
 			debug('empty');
 		}
 		$testData = $this->Test->find('all');
 		// debug($testData);
 		$this->set('test_data', $testData);
+		$this->set('locale', $locale);
+		$this->set('timezone', $timezone);
+		$this->set('curr', $curr);
 
 	}
 
