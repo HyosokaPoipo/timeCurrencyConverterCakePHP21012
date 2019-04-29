@@ -27,3 +27,16 @@ msgstr "Tanggal"
 
 msgid "Currency"
 msgstr "Uang"
+
+msgid "CurrencyError"
+msgstr "Silahkan masukkan jumlah uang yang valid"
+
+msgid "DateError"
+msgstr "Silahkan masukkan tanggal yang valid"
+
+
+msgid "Error"
+msgstr "Gagal"
+
+msgid "Success"
+msgstr "Sukses"

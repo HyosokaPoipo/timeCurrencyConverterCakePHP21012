@@ -28,3 +28,19 @@ msgstr "Date"
 msgid "Currency"
 msgstr "Currency"
 
+msgid "CurrencyError"
+msgstr "Please input a valid monetary amount."
+
+msgid "DateError"
+msgstr "Please input a valid date."
+
+
+msgid "Error"
+msgstr "Error"
+
+msgid "Success"
+msgstr "Success"
+
+msgid "SuccessMsg"
+msgstr "Your data has been successfully saved"
+

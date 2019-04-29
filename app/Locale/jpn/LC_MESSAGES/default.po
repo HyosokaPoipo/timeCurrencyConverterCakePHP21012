@@ -29,3 +29,18 @@ msgstr "日付"
 
 msgid "Currency"
 msgstr "通貨"
+
+msgid "CurrencyError"
+msgstr "有効な金額を入力してください。"
+
+msgid "DateError"
+msgstr "有効な日付を入力してください。"
+
+msgid "Error"
+msgstr "エラー"
+
+msgid "Success"
+msgstr "成功"
+
+msgid "SuccessMsg"
+msgstr "データを保存しました"

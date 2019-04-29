@@ -171,8 +171,8 @@ $( function() {
 			, data: {'content': param}
 			, url: "<?php echo $this->request->base.'/tests/saveTests'?>"
 			, success: function (res) {	
-				$('#modalTitle').text('Success');
-				$('#modalContent').text("sukses");			
+				$('#modalTitle').text("<?php echo __('Success') ;?>");
+				$('#modalContent').text("<?php echo __('SuccessMsg') ;?>");			
 				$('#myModal').modal('show');
 			}
 			, error: function (err) {
@@ -182,15 +182,16 @@ $( function() {
 				var displayedText = '';
 				if (typeof(errMsg['date_input']) !== 'undefined') {
 					$("#input-date").css("border-color", 'red');
-					displayedText = "- " + errMsg['date_input']+"<br>";
+					displayedText = "- " + "<?php echo __('CurrencyError') ;?>"+
+					/*errMsg['date_input']+ */"<br>";
 				}
 
 				if (typeof(errMsg['currency_amount']) !== 'undefined') {
 					$("input:text").css("border-color", 'red');
-					displayedText += "- " + errMsg['currency_amount'];
+					displayedText += "- " + "<?php echo __('DateError') ;?>"; // + errMsg['currency_amount'];
 				}
 				
-				$('#modalTitle').text('Error');
+				$('#modalTitle').text("<?php echo __('Error') ;?>");
 				$('#modalContent').html(displayedText);	
 				// $('#modalTitle').css('color', 'red');
 				$('#myModal').modal('show');
