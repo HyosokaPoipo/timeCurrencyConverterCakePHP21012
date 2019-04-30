@@ -79,7 +79,7 @@ $url = $this->request->base . '/tests/converterUtil';
 			foreach ($data as $key => $core_data) {
 			$no++;
 	?>
-		<tr>
+		<tr data-number="<?php echo $no ;?>">
 			<td style="text-align: center;"> <?php echo $no ;?> </td>
 			<td style="text-align: center;"> <?php echo $this->Converter->convertDate($core_data['date_input']) ;?> </td>
 			<td style="text-align: center;"> <?php echo $this->Converter->convertCurrency($core_data['currency_amount']) ;?> </td>
@@ -171,9 +171,20 @@ $( function() {
 			, data: {'content': param}
 			, url: "<?php echo $this->request->base.'/tests/saveTests'?>"
 			, success: function (res) {	
+				console.log('response di success');
+				var sccMsg = JSON.parse(JSON.stringify(res));
 				$('#modalTitle').text("<?php echo __('Success') ;?>");
 				$('#modalContent').text("<?php echo __('SuccessMsg') ;?>");			
-				$('#myModal').modal('show');		}
+				$('#myModal').modal('show');
+				var lastRow = $('#myTable tr:last');
+				console.log('numer ' + lastRow.data('number'));
+				lastRow.after(
+					'<tr data-id='+ (lastRow.data('number') + 1) +'> ' + 
+					' <td style="text-align: center;"> ' + (lastRow.data('number') + 1) +' </td> ' +
+					' <td style="text-align: center;"> ' + sccMsg.date_input + ' </td>' +
+					' <td style="text-align: center;"> ' + sccMsg.currency_amount + ' </td>' +
+					'</tr>'
+				);}
 			, error: function (err) {
 				var errorRaw = JSON.parse(JSON.stringify(err));
 				var errMsg = JSON.parse(errorRaw.responseText);

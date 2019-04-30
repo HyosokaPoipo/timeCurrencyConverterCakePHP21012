@@ -40,6 +40,11 @@ class TestsController extends AppController {
 	public $components = ['Converter'];	
 	public $helpers = ['Converter'];
 
+	private $myConverter;
+	private $myLocale = 'en_US';
+	private $myTimezone =  'America/New_York';
+	private $myCurr = 'USD';
+
 	public function index() {
 		$this->Converter->init('ja_JP', 'Asia/Tokyo', 'JPY');
 		$test = $this->Converter->convertCurrency(123456.788);
@@ -134,49 +139,46 @@ class TestsController extends AppController {
 		$this->log('***********************akhir dari converter util******************************');
 
 
-		$converter = new ConverterUtil();
-		$locale = 'en_US';
-		$timezone =  'America/New_York';
-		$curr = 'USD';
+		$this->myConverter = new ConverterUtil();
 		if (!empty($this->params['pass'][0])) {
 			switch ($this->params['pass'][0]) {
 				case 'jpn':
 					Configure::write('Config.language','jpn');
-					$locale = 'ja_jp';
-					$timezone =  'Asia/Tokyo';
-					$curr = 'JPY';
+					$this->myLocale = 'ja_jp';
+					$this->myTimezone =  'Asia/Tokyo';
+					$this->myCurr = 'JPY';
 					break;
 				case 'idn':
 					Configure::write('Config.language','idn');
-					$locale = 'id_ID';
-					$timezone =  'Asia/Jakarta';
-					$curr = 'IDR';
+					$this->myLocale = 'id_ID';
+					$this->myTimezone =  'Asia/Jakarta';
+					$this->myCurr = 'IDR';
 					break;
 				case 'eng':
 					Configure::write('Config.language','eng');
-					$locale = 'en_US';
-					$timezone =  'America/New_York';
-					$curr = 'USD';
+					$this->myLocale = 'en_US';
+					$this->myTimezone =  'America/New_York';
+					$this->myCurr = 'USD';
 					break;	
 				default:
 					Configure::write('Config.language','eng');
-					$locale = 'en_US';
-					$timezone =  'America/New_York';
-					$curr = 'USD';
+					$this->myLocale = 'en_US';
+					$this->myTimezone =  'America/New_York';
+					$this->myCurr = 'USD';
 					break;
 			}
-
-			$converter->init($locale, $timezone, $curr);
+			$this->myConverter->init($this->myLocale, $this->myTimezone, $this->myCurr);
 
 		}else {
-			debug('empty');
+			// debug('empty');
 		}
 		$testData = $this->Test->find('all');
-		// debug($testData);
+		// debug($this->myLocale);
+
 		$this->set('test_data', $testData);
-		$this->set('locale', $locale);
-		$this->set('timezone', $timezone);
-		$this->set('curr', $curr);
+		$this->set('locale', $this->myLocale);
+		$this->set('timezone', $this->myTimezone);
+		$this->set('curr', $this->myCurr);
 
 	}
 
@@ -192,13 +194,20 @@ class TestsController extends AppController {
 	}
 
 	public function saveTests() {
-		$msg = 'ok';
+		$msg = [];
 		$this->Test->set($this->request->data('content'));
-
+		$this->log('isi data content');
+		$this->log($this->request->data('content'));
 		$this->response->type('json');
 		if ($this->Test->validates()) {
 			$this->Test->save($this->request->data('content'));
-			$this->response->statusCode(200);	
+			$this->response->statusCode(200);
+			$this->myConverter = new ConverterUtil();
+			$this->myConverter->init($this->myLocale, $this->myTimezone, $this->myCurr);
+			$msg = [
+				'date_input' => $this->myConverter->convertDate($this->request->data('content')['date_input']),
+				'currency_amount' => $this->myConverter->convertCurrency($this->request->data('content')['currency_amount'])
+			];
 		} else {
 			// $this->Session->setFlash($this->Device->validationErrors);
 			$msg = $this->Test->validationErrors;
