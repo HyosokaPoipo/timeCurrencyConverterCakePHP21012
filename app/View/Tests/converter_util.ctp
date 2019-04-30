@@ -66,7 +66,7 @@ $url = $this->request->base . '/tests/converterUtil';
 </div>
 
 <div>
-	<table id="soap_table" style="margin-top: 80px; color: black;">
+	<table id="myTable" style="margin-top: 80px; color: black;">
 		<tr class="bg-info">
 			<td style="text-align: center;"> <?php echo __('No') ;?> </td>
 			<td style="text-align: center;"> <?php echo __('Date') ;?> </td>
@@ -173,24 +173,24 @@ $( function() {
 			, success: function (res) {	
 				$('#modalTitle').text("<?php echo __('Success') ;?>");
 				$('#modalContent').text("<?php echo __('SuccessMsg') ;?>");			
-				$('#myModal').modal('show');
-			}
+				$('#myModal').modal('show');		}
 			, error: function (err) {
 				var errorRaw = JSON.parse(JSON.stringify(err));
 				var errMsg = JSON.parse(errorRaw.responseText);
-				console.log(errMsg['currency_amount']);
 				var displayedText = '';
 				if (typeof(errMsg['date_input']) !== 'undefined') {
 					$("#input-date").css("border-color", 'red');
-					displayedText = "- " + "<?php echo __('CurrencyError') ;?>"+
-					/*errMsg['date_input']+ */"<br>";
+					displayedText = "- " + "<?php echo __('DateError') ;?>"+
+					/*errMsg['date_input']+ */ "<br>";
+					// displayedText = errMsg['date_input'];
+
 				}
 
 				if (typeof(errMsg['currency_amount']) !== 'undefined') {
 					$("input:text").css("border-color", 'red');
-					displayedText += "- " + "<?php echo __('DateError') ;?>"; // + errMsg['currency_amount'];
+					displayedText += "- " + "<?php echo __('CurrencyError') ;?>"; // + errMsg['currency_amount'];
 				}
-				
+				console.log(displayedText);
 				$('#modalTitle').text("<?php echo __('Error') ;?>");
 				$('#modalContent').html(displayedText);	
 				// $('#modalTitle').css('color', 'red');

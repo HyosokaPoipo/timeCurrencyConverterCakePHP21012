@@ -40,3 +40,7 @@ msgstr "Gagal"
 
 msgid "Success"
 msgstr "Sukses"
+
+
+msgid "SuccessMsg"
+msgstr "Data berhasil disimpan"

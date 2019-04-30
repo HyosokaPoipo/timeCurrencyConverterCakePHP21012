@@ -144,7 +144,7 @@ class TestsController extends AppController {
 					Configure::write('Config.language','jpn');
 					$locale = 'ja_jp';
 					$timezone =  'Asia/Tokyo';
-					$curr = 'jpn';
+					$curr = 'JPY';
 					break;
 				case 'idn':
 					Configure::write('Config.language','idn');

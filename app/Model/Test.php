@@ -7,13 +7,13 @@ class Test extends AppModel {
 	        'formatCheck' => array (
 	        	'rule' => 'money',
 	        	'allowEmpty' => false,
-		        'message' => "__('CurrencyError')"
+		        'message' => 'CurrencyError'
 	        )
     	),
     	'date_input' => array(
 	        'rule' => 'date',
 	        'allowEmpty' => false,
-	        'message' => "__('DateError')"
+	        'message' => 'DateError'
     	)
 	);
 }
