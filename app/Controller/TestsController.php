@@ -40,10 +40,11 @@ class TestsController extends AppController {
 	public $components = ['Converter'];	
 	public $helpers = ['Converter'];
 
-	private $myConverter;
-	private $myLocale = 'en_US';
-	private $myTimezone =  'America/New_York';
-	private $myCurr = 'USD';
+	public $myConverter;	
+	public $myLocale = 'en_US';
+	public $myTimezone =  'America/New_York';
+	public $myCurr = 'USD';
+
 
 	public function index() {
 		$this->Converter->init('ja_JP', 'Asia/Tokyo', 'JPY');
@@ -122,23 +123,6 @@ class TestsController extends AppController {
 	}
 
 	public function converterUtil() {
-		$this->log('***********************awal dari converter util******************************');
-		// $converter = new ConverterUtil();
-		// $converter->init('ja_JP', 'Asia/Tokyo', 'JPY');	
-		// $test = $converter->convertCurrency(123456.788);
-		// $this->set('jpCurr', $test);
-		// $this->set('jpDate', $converter->convertDate(new DateTime));
-
-		// $converter->init('id_ID', 'Asia/Jakarta', 'IDR');		
-		// $this->set('idrCurr', $converter->convertCurrency(23456789901.123456));
-		// $this->set('idrDate', $converter->convertDate(new DateTime));
-		
-		// $converter->init('en_US', 'America/New_York', 'USD');	
-		// $this->set('usCurr', $converter->convertCurrency(23456789901.123456));
-		// $this->set('usDate', $converter->convertDate(new DateTime));
-		$this->log('***********************akhir dari converter util******************************');
-
-
 		$this->myConverter = new ConverterUtil();
 		if (!empty($this->params['pass'][0])) {
 			switch ($this->params['pass'][0]) {
@@ -179,7 +163,6 @@ class TestsController extends AppController {
 		$this->set('locale', $this->myLocale);
 		$this->set('timezone', $this->myTimezone);
 		$this->set('curr', $this->myCurr);
-
 	}
 
 	public function changeLanguage(){
@@ -196,14 +179,15 @@ class TestsController extends AppController {
 	public function saveTests() {
 		$msg = [];
 		$this->Test->set($this->request->data('content'));
-		$this->log('isi data content');
-		$this->log($this->request->data('content'));
 		$this->response->type('json');
 		if ($this->Test->validates()) {
 			$this->Test->save($this->request->data('content'));
 			$this->response->statusCode(200);
 			$this->myConverter = new ConverterUtil();
-			$this->myConverter->init($this->myLocale, $this->myTimezone, $this->myCurr);
+			$this->myConverter->init(
+				$this->request->data('content')['locale'], 
+				$this->request->data('content')['timezone'], 
+				$this->request->data('content')['curr']);
 			$msg = [
 				'date_input' => $this->myConverter->convertDate($this->request->data('content')['date_input']),
 				'currency_amount' => $this->myConverter->convertCurrency($this->request->data('content')['currency_amount'])

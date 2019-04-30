@@ -164,7 +164,10 @@ $( function() {
 	function saveTest() {
 		var param = {
 			'date_input': $('#input-date').val(),
-			'currency_amount': $("input:text").val()
+			'currency_amount': $("input:text").val(),
+			'locale': '<?php echo $locale; ?>',
+			'timezone': '<?php echo $timezone; ?>',
+			'curr': '<?php echo $curr; ?>' //$locale, $timezone, $curr
 		};
 		$.ajax({
 			type: "POST"
@@ -177,10 +180,13 @@ $( function() {
 				$('#modalContent').text("<?php echo __('SuccessMsg') ;?>");			
 				$('#myModal').modal('show');
 				var lastRow = $('#myTable tr:last');
-				console.log('numer ' + lastRow.data('number'));
+				var number = lastRow.data('number');
+				if (isNaN(number)) {
+					number = 0;
+				}
 				lastRow.after(
-					'<tr data-id='+ (lastRow.data('number') + 1) +'> ' + 
-					' <td style="text-align: center;"> ' + (lastRow.data('number') + 1) +' </td> ' +
+					'<tr data-id='+ (number + 1) +'> ' + 
+					' <td style="text-align: center;"> ' + (number + 1) +' </td> ' +
 					' <td style="text-align: center;"> ' + sccMsg.date_input + ' </td>' +
 					' <td style="text-align: center;"> ' + sccMsg.currency_amount + ' </td>' +
 					'</tr>'
