@@ -127,6 +127,43 @@ $( function() {
 <!-- ************************************** --->
 
 
+<div class='form-group'>
+    <input type='text' class="form-control" id='datetimepicker4' />
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker4').datepicker({ 
+        	onSelect: function(date) {
+        		$('#datetimepicker4').val(jicaDateFormat(date));
+        	}
+        }); 
+
+        function jicaDateFormat(date) {
+        	var tempDate = new Date(date);
+        	var res = '';
+        	switch('<?php echo $locale; ?>') {
+        		case 'ja_jp':
+        			res = tempDate.getFullYear() + '-' + (tempDate.getMonth()+1) + '-'+ tempDate.getDate();
+        			break;
+        		case 'id_ID':
+        			res = tempDate.getDate() + '-' + (tempDate.getMonth()+1) + '-'+ tempDate.getFullYear();
+        			break;
+        		case 'en_us':
+        			res = (tempDate.getMonth()+1) + '-' + tempDate.getDate() + '-'+ tempDate.getFullYear();
+        			break;
+        		default:
+        			res = (tempDate.getMonth()+1) + '-' + tempDate.getDate() + '-'+ tempDate.getFullYear();
+        			break;
+        	}
+        	return res;
+        }               
+    });
+</script>
+    
+
+
+
+
 <script type="text/javascript">
 	$( document ).ready(function() {
     	$( "input:text" ).focus(function() {
