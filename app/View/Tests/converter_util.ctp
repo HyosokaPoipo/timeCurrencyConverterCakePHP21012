@@ -31,6 +31,16 @@ $url = $this->request->base . '/tests/converterUtil';
 	input:focus { 
 	  border-color: #ced4da;
 	}
+	
+	a.ui-datepicker-next.ui-corner-all::after {
+		content: ">";
+		font-weight: bold;
+	}
+
+	a.ui-datepicker-prev.ui-corner-all::after {
+		content: "<";
+		font-weight: bold;
+	}
 </style>
 
 <div class="dropdown show text-right">
@@ -47,8 +57,9 @@ $url = $this->request->base . '/tests/converterUtil';
 
 <div class="form-group">
  <label ><?php echo __('PickupDate') ;?></label>
- <input id="input-date" type="date" name="bday" max="3000-12-31" 
-        min="1000-01-01" class="form-control" placeholder="">
+ <!-- <input id="input-date" type="date" name="bday" max="3000-12-31" 
+        min="1000-01-01" class="form-control" placeholder=""> -->
+  <input type='text' class="form-control" id='input-date' />
 </div>
 <!-- <div class="form-group">
  <label >Einde voorverkoop periode</label>
@@ -57,7 +68,7 @@ $url = $this->request->base . '/tests/converterUtil';
 </div> -->
 <div class="form-group">
  <label ><?php echo __('PutMoneyAmount') ;?></label>
- <input type="text" class="form-control">
+ <input type="text" class="form-control" id="money-amount">
 </div>
 
 <div class="text-right">
@@ -127,36 +138,10 @@ $( function() {
 <!-- ************************************** --->
 
 
-<div class='form-group'>
-    <input type='text' class="form-control" id='datetimepicker4' />
-</div>
+
 <script type="text/javascript">
     $(function () {
-        $('#datetimepicker4').datepicker({ 
-        	onSelect: function(date) {
-        		$('#datetimepicker4').val(jicaDateFormat(date));
-        	}
-        }); 
-
-        function jicaDateFormat(date) {
-        	var tempDate = new Date(date);
-        	var res = '';
-        	switch('<?php echo $locale; ?>') {
-        		case 'ja_jp':
-        			res = tempDate.getFullYear() + '-' + (tempDate.getMonth()+1) + '-'+ tempDate.getDate();
-        			break;
-        		case 'id_ID':
-        			res = tempDate.getDate() + '-' + (tempDate.getMonth()+1) + '-'+ tempDate.getFullYear();
-        			break;
-        		case 'en_us':
-        			res = (tempDate.getMonth()+1) + '-' + tempDate.getDate() + '-'+ tempDate.getFullYear();
-        			break;
-        		default:
-        			res = (tempDate.getMonth()+1) + '-' + tempDate.getDate() + '-'+ tempDate.getFullYear();
-        			break;
-        	}
-        	return res;
-        }               
+         
     });
 </script>
     
@@ -165,6 +150,7 @@ $( function() {
 
 
 <script type="text/javascript">
+	var fixDate = '';
 	$( document ).ready(function() {
     	$( "input:text" ).focus(function() {
 		  $( "input:text" ).css("border-color", '#ced4da');
@@ -173,6 +159,32 @@ $( function() {
 		  $('#input-date').css("border-color", '#ced4da');
 		});
 	});
+	$('#input-date').datepicker({ 
+		onSelect: function(date) {
+			$('#input-date').val(jicaDateFormat(date));
+		}
+	}); 
+
+	function jicaDateFormat(date) {				
+		var tempDate = new Date(date);
+		var res = '';
+		switch('<?php echo $locale; ?>') {
+			case 'ja_jp':
+				res = tempDate.getFullYear() + '/' + (tempDate.getMonth()+1) + '/'+ tempDate.getDate();
+				break;
+			case 'id_ID':
+				res = tempDate.getDate() + '/' + (tempDate.getMonth()+1) + '/'+ tempDate.getFullYear();
+				break;
+			case 'en_us':
+				res = (tempDate.getMonth()+1) + '/' + tempDate.getDate() + '/'+ tempDate.getFullYear();
+				break;
+			default:
+				res = (tempDate.getMonth()+1) + '/' + tempDate.getDate() + '/'+ tempDate.getFullYear();
+				break;
+		}
+		fixDate = tempDate.getFullYear() + '/' + (tempDate.getMonth()+1) + '/'+ tempDate.getDate();
+		return res;
+	}              
 	function changeLanguage(e, locale) {
 		e.preventDefault();
 		console.log(locale);
@@ -199,13 +211,15 @@ $( function() {
 
 
 	function saveTest() {
+		var tempDate = new Date($('#input-date').val());
 		var param = {
-			'date_input': $('#input-date').val(),
-			'currency_amount': $("input:text").val(),
+			'date_input': tempDate.getFullYear() + '/' + (tempDate.getMonth()+1) + '/'+ tempDate.getDate(),
+			'currency_amount': $("#money-amount").val(),
 			'locale': '<?php echo $locale; ?>',
 			'timezone': '<?php echo $timezone; ?>',
-			'curr': '<?php echo $curr; ?>' //$locale, $timezone, $curr
-		};
+			'curr': '<?php echo $curr; ?>' 
+		};		
+		console.log(param);
 		$.ajax({
 			type: "POST"
 			, data: {'content': param}
@@ -234,20 +248,17 @@ $( function() {
 				var displayedText = '';
 				if (typeof(errMsg['date_input']) !== 'undefined') {
 					$("#input-date").css("border-color", 'red');
-					displayedText = "- " + "<?php echo __('DateError') ;?>"+
-					/*errMsg['date_input']+ */ "<br>";
-					// displayedText = errMsg['date_input'];
+					displayedText = "- " + "<?php echo __('DateError') ;?>"+"<br>";
 
 				}
 
 				if (typeof(errMsg['currency_amount']) !== 'undefined') {
-					$("input:text").css("border-color", 'red');
-					displayedText += "- " + "<?php echo __('CurrencyError') ;?>"; // + errMsg['currency_amount'];
+					$("#money-amount").css("border-color", 'red');
+					displayedText += "- " + "<?php echo __('CurrencyError') ;?>";
 				}
 				console.log(displayedText);
 				$('#modalTitle').text("<?php echo __('Error') ;?>");
 				$('#modalContent').html(displayedText);	
-				// $('#modalTitle').css('color', 'red');
 				$('#myModal').modal('show');
 			}
 			, cache: false
@@ -256,6 +267,6 @@ $( function() {
 	
 	function cancelTest() {
 		$('#input-date').val('');
-		$( "input:text" ).val('');
+		$( "#money-amount" ).val('');
 	}
 </script>

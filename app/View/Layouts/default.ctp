@@ -40,10 +40,11 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
   	<?php echo $this->Html->script('popper.min.js');?>
   	<?php echo $this->Html->script('bootstrap.js');?>
 	<?php echo $this->Html->script('moment.js');?>
-	<?php echo $this->Html->css('jquery-ui.min.css');?>
+	<?php echo $this->Html->css('jquery-ui.css');?>
 	<?php echo $this->Html->css('bootstrap.css');?>
 	<?php echo $this->Html->css('bootstrap-datetimepicker.min.css');?>
-	<?php echo $this->Html->css('all.min.css');?>
+	<?php echo $this->Html->css('all.min.css');?> 
+	<?php echo $this->Html->css('jquery-ui.theme.css');?>
 	
 </head>
 <body>
