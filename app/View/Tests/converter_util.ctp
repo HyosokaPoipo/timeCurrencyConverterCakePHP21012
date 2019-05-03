@@ -126,35 +126,9 @@ $url = $this->request->base . '/tests/converterUtil';
 </div>
 
 
-<!-- ************************************** --->
-<!-- <script type="text/javascript">
-$( function() {
-    $( "#datepicker" ).datepicker();
-  	} 
-  );
-  
-</script>
-<div class="form-group">
- <p>Date example : <input type="text" id="datepicker"></p>
-</div> -->
-
-<!-- ************************************** --->
-
-
-
-<script type="text/javascript">
-    $(function () {
-         
-    });
-</script>
-    
-
-
-
-
 <script type="text/javascript">
 	var fixDate = '';
-	var sortNumberType = 'DESC';
+	var sortNumberType = 'ASC';
 	$( document ).ready(function() {
     	$( "input:text" ).focus(function() {
 		  $( "input:text" ).css("border-color", '#ced4da');
@@ -227,24 +201,42 @@ $( function() {
 			type: "POST"
 			, data: {'content': param}
 			, url: "<?php echo $this->request->base.'/tests/saveTests'?>"
-			, success: function (res) {	
-				console.log('response di success');
+			, success: function (res) {
 				var sccMsg = JSON.parse(JSON.stringify(res));
 				$('#modalTitle').text("<?php echo __('Success') ;?>");
 				$('#modalContent').text("<?php echo __('SuccessMsg') ;?>");			
 				$('#myModal').modal('show');
-				var lastRow = $('#myTable tr:last');
-				var number = lastRow.data('number');
-				if (isNaN(number)) {
-					number = 0;
+				console.log('current sot number type  :' + sortNumberType);
+
+				var lastRow = null;
+				if (sortNumberType == 'ASC') {
+					lastRow = $('#myTable tr:last');
+					var number = lastRow.data('number');
+					if (isNaN(number)) {
+						number = 0;
+					}
+					lastRow.after(
+						'<tr data-number='+ (number + 1) +'> ' + 
+						' <td style="text-align: center;"> ' + (number + 1) +' </td> ' +
+						' <td style="text-align: center;"> ' + sccMsg.date_input + ' </td>' +
+						' <td style="text-align: center;"> ' + sccMsg.currency_amount + ' </td>' +
+						'</tr>'
+					);
+				} else if(sortNumberType == 'DESC'){
+					lastRow = $('#myTable tr:nth-child(2)');
+					var number = lastRow.data('number');
+					if (isNaN(number)) {
+						number = 0;
+					}
+					lastRow.before(
+						'<tr data-number='+ (number + 1) +'> ' + 
+						' <td style="text-align: center;"> ' + (number + 1) +' </td> ' +
+						' <td style="text-align: center;"> ' + sccMsg.date_input + ' </td>' +
+						' <td style="text-align: center;"> ' + sccMsg.currency_amount + ' </td>' +
+						'</tr>'
+					);
 				}
-				lastRow.after(
-					'<tr data-id='+ (number + 1) +'> ' + 
-					' <td style="text-align: center;"> ' + (number + 1) +' </td> ' +
-					' <td style="text-align: center;"> ' + sccMsg.date_input + ' </td>' +
-					' <td style="text-align: center;"> ' + sccMsg.currency_amount + ' </td>' +
-					'</tr>'
-				);}
+			}	
 			, error: function (err) {
 				var errorRaw = JSON.parse(JSON.stringify(err));
 				var errMsg = JSON.parse(errorRaw.responseText);
@@ -263,7 +255,6 @@ $( function() {
 				if (typeof(errMsg['save_error']) !== 'undefined') {
 					displayedText += "- " + "<?php echo __('SaveError') ;?>";
 				}
-				console.log(displayedText);
 				$('#modalTitle').text("<?php echo __('Error') ;?>");
 				$('#modalContent').html(displayedText);	
 				$('#myModal').modal('show');
@@ -278,6 +269,11 @@ $( function() {
 	}
 
 	$('#sort-number').click(function () {
+		if (sortNumberType == 'ASC') {
+			sortNumberType = 'DESC'
+		} else {
+			sortNumberType = 'ASC'
+		}
 		var param = {
 			'sort_type': sortNumberType,
 			'sort_param': 'id',			
@@ -291,17 +287,13 @@ $( function() {
 			, url: "<?php echo $this->request->base.'/tests/sortNumber'?>"
 			, success: function (res) {
 				var rawData = JSON.parse(JSON.stringify(res));
-				console.log(rawData);
 				$('#myTable').find("tr:gt(0)").remove();
 				var size = rawData.length;
-				console.log('size : ' + size);
-				console.log('current sorting : ' + sortNumberType);
 				if (sortNumberType == 'ASC') {
 					for(var i = 0; i < size; i++) {
 						var lastRow = $('#myTable tr:last');
-						console.log(rawData[i].id);
 						lastRow.after(
-							'<tr data-id='+ (i + 1) +'> ' + 
+							'<tr data-number='+ (i + 1) +'> ' + 
 							' <td style="text-align: center;"> ' + (i + 1) +' </td> ' +
 							' <td style="text-align: center;"> ' + rawData[i].date_input + ' </td>' +
 							' <td style="text-align: center;"> ' + rawData[i].currency_amount + ' </td>' +
@@ -309,14 +301,12 @@ $( function() {
 						);
 
 					}
-					sortNumberType = 'DESC'
 				} else {
 					// TYPE HERE IS ONLY DESC
 					for(var i = 0; i < size; i++) {
 						var lastRow = $('#myTable tr:last');
-						console.log(rawData[(size-1)].id);
 						lastRow.after(
-							'<tr data-id='+ (size - i) +'> ' + 
+							'<tr data-number='+ (size - i) +'> ' + 
 							' <td style="text-align: center;"> ' + (size - i) +' </td> ' +
 							' <td style="text-align: center;"> ' + rawData[i].date_input + ' </td>' +
 							' <td style="text-align: center;"> ' + rawData[i].currency_amount + ' </td>' +
@@ -324,7 +314,6 @@ $( function() {
 						);
 
 					}
-					sortNumberType = 'ASC'
 				}
 			}
 			, error: function (err) {
