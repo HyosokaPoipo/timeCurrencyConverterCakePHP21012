@@ -129,6 +129,7 @@ $url = $this->request->base . '/tests/converterUtil';
 <script type="text/javascript">
 	var fixDate = '';
 	var sortNumberType = 'ASC';
+	var sortDateType = 'ASC';
 	$( document ).ready(function() {
     	$( "input:text" ).focus(function() {
 		  $( "input:text" ).css("border-color", '#ced4da');
@@ -268,7 +269,7 @@ $url = $this->request->base . '/tests/converterUtil';
 		$( "#money-amount" ).val('');
 	}
 
-	$('#sort-number').click(function () {
+	$('#sort-number').click(function() {
 		if (sortNumberType == 'ASC') {
 			sortNumberType = 'DESC'
 		} else {
@@ -317,6 +318,47 @@ $url = $this->request->base . '/tests/converterUtil';
 				}
 			}
 			, error: function (err) {
+			}
+		});
+	});
+
+	$('#sort-date').click(function() {
+		var param = {
+			'sort_type': sortDateType,
+			'sort_param': 'date_input',			
+			'locale': '<?php echo $locale; ?>',
+			'timezone': '<?php echo $timezone; ?>',
+			'curr': '<?php echo $curr; ?>' 
+		}
+
+		$.ajax({
+			type: "POST"
+			, data: {'content': param}
+			, url: "<?php echo $this->request->base.'/tests/sortNumber'?>"
+			, success: function (res) {
+				var rawData = JSON.parse(JSON.stringify(res));
+				var tempNumber = 1;
+				console.log(rawData);
+				$('#myTable').find("tr:gt(0)").remove();
+
+				rawData.forEach(function(item){
+					var lastRow = $('#myTable tr:last');
+					lastRow.after(
+						'<tr data-number='+ tempNumber +'> ' + 
+						' <td style="text-align: center;"> ' + tempNumber +' </td> ' +
+						' <td style="text-align: center;"> ' + item.date_input + ' </td>' +
+						' <td style="text-align: center;"> ' + item.currency_amount + ' </td>' +
+						'</tr>'
+					);
+					tempNumber++;
+				});
+
+				if (sortDateType == 'ASC') {
+					sortDateType = 'DESC'
+				} else {
+					sortDateType = 'ASC'
+				}
+			}, error: function (err) {
 			}
 		});
 	});

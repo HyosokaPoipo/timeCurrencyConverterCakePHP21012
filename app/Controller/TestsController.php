@@ -241,8 +241,6 @@ class TestsController extends AppController {
 			];
 			array_push($result, $temp);
 		}
-		$this->log(' SORT TYPE : '. $this->request->data('content')['sort_type']);
-		$this->log($result);
 		$this->response->type('json');
 		$this->response->body(json_encode($result));
 		$this->response->send();
