@@ -178,20 +178,33 @@ class TestsController extends AppController {
 
 	public function saveTests() {
 		$msg = [];
+
+		$this->myConverter = new ConverterUtil();
+		$this->myConverter->init(
+			$this->request->data('content')['locale'], 
+			$this->request->data('content')['timezone'], 
+			$this->request->data('content')['curr']);
+
 		$this->Test->set($this->request->data('content'));
 		$this->response->type('json');
 		if ($this->Test->validates()) {
-			$this->Test->save($this->request->data('content'));
-			$this->response->statusCode(200);
-			$this->myConverter = new ConverterUtil();
-			$this->myConverter->init(
-				$this->request->data('content')['locale'], 
-				$this->request->data('content')['timezone'], 
-				$this->request->data('content')['curr']);
-			$msg = [
-				'date_input' => $this->myConverter->convertDate($this->request->data('content')['date_input']),
-				'currency_amount' => $this->myConverter->convertCurrency($this->request->data('content')['currency_amount'])
+			$tempData = [
+				'date_input' => $this->request->data('content')['date_input'],
+				'currency_amount' => $this->myConverter->saveCurrencyWithRate($this->request->data('content')['currency_amount'])
 			];
+			$this->log($tempData);
+			if ($this->Test->save($tempData)) {
+				$this->response->statusCode(200);
+				$msg = [
+					'date_input' => $this->myConverter->convertDate($this->request->data('content')['date_input']),
+					'currency_amount' => $this->myConverter->displayCurrencyWithRate($tempData['currency_amount'])
+				];
+			} else {
+				$this->response->statusCode(400);
+				$msg = [
+					'save_error' => ''
+				];
+			}
 		} else {
 			// $this->Session->setFlash($this->Device->validationErrors);
 			$msg = $this->Test->validationErrors;

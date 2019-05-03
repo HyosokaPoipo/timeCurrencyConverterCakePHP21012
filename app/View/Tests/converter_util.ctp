@@ -93,7 +93,7 @@ $url = $this->request->base . '/tests/converterUtil';
 		<tr data-number="<?php echo $no ;?>">
 			<td style="text-align: center;"> <?php echo $no ;?> </td>
 			<td style="text-align: center;"> <?php echo $this->Converter->convertDate($core_data['date_input']) ;?> </td>
-			<td style="text-align: center;"> <?php echo $this->Converter->convertCurrency($core_data['currency_amount']) ;?> </td>
+			<td style="text-align: center;"> <?php echo $this->Converter->displayCurrencyWithRate($core_data['currency_amount']) ;?> </td>
 		</tr>
 	<?php		
 			}		
@@ -255,6 +255,10 @@ $( function() {
 				if (typeof(errMsg['currency_amount']) !== 'undefined') {
 					$("#money-amount").css("border-color", 'red');
 					displayedText += "- " + "<?php echo __('CurrencyError') ;?>";
+				}
+
+				if (typeof(errMsg['save_error']) !== 'undefined') {
+					displayedText += "- " + "<?php echo __('SaveError') ;?>";
 				}
 				console.log(displayedText);
 				$('#modalTitle').text("<?php echo __('Error') ;?>");

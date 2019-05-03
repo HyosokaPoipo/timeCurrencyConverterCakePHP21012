@@ -31,6 +31,14 @@ class ConverterHelper extends AppHelper {
 	public function utilConverterDate($date) {
 		return $this->utilConverter->convertDate($date);
 	}
+
+	public function displayCurrencyWithRate($currencyAmount) {
+		return $this->utilConverter->displayCurrencyWithRate($currencyAmount);
+	}
+
+	public function saveCurrencyWithRate($currencyAmount) {
+		return $this->utilConverter->saveCurrencyWithRate($currencyAmount);
+	}
 }
 
 ?>

@@ -44,3 +44,6 @@ msgstr "Success"
 msgid "SuccessMsg"
 msgstr "Your data has been successfully saved"
 
+msgid "SaveError"
+msgstr "Error occured when saving data"
+

@@ -14,14 +14,14 @@ msgid "PutMoneyAmount"
 msgstr "お金を入れる :"
 
 msgid "Save"
-msgstr "救う"
+msgstr "保存"
 
 msgid "Cancel"
-msgstr "取り消す"
+msgstr "取消"
 
 
 msgid "No"
-msgstr "ノー"
+msgstr "No."
 
 msgid "Date"
 msgstr "日付"
@@ -44,3 +44,7 @@ msgstr "成功"
 
 msgid "SuccessMsg"
 msgstr "データを保存しました"
+
+
+msgid "SaveError"
+msgstr "データの保存中にエラーが発生しました"
