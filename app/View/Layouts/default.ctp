@@ -44,8 +44,8 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 	<?php echo $this->Html->css('bootstrap.css');?>
 	<?php echo $this->Html->css('bootstrap-datetimepicker.min.css');?>
 	<?php echo $this->Html->css('all.min.css');?> 
-	<?php echo $this->Html->css('jquery-ui.theme.css');?>
-	
+	<?php echo $this->Html->css('jquery-ui.theme.css');?> 
+	<?php echo $this->Html->css('font-awesome.css');?>
 </head>
 <body>
 	<div id="container">

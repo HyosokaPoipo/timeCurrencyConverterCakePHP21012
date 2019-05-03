@@ -156,7 +156,11 @@ class TestsController extends AppController {
 		}else {
 			// debug('empty');
 		}
-		$testData = $this->Test->find('all');
+		$testData = $this->Test->find('all', [
+			'order' => [
+				'id' => 'ASC'
+			]
+		]);
 		// debug($this->myLocale);
 
 		$this->set('test_data', $testData);
@@ -211,6 +215,36 @@ class TestsController extends AppController {
 			$this->response->statusCode(400);
 		}
 		$this->response->body(json_encode($msg));
+		$this->response->send();
+		$this->_stop();
+	}
+
+	public function sortNumber() {
+		$this->myConverter = new ConverterUtil();
+		$this->myConverter->init(
+			$this->request->data('content')['locale'], 
+			$this->request->data('content')['timezone'], 
+			$this->request->data('content')['curr']
+		);
+
+		$testData = $this->Test->find('all', [
+			'order' => "Test.".$this->request->data('content')['sort_param']." ".$this->request->data('content')['sort_type']			
+		]);
+		
+		$result = [];
+
+		foreach ($testData as $key => $value) {
+			$temp = [
+				'id' => $value['Test']['id'],
+				'date_input' => $this->myConverter->convertDate($value['Test']['date_input']),
+				'currency_amount' => $this->myConverter->displayCurrencyWithRate($value['Test']['currency_amount'])
+			];
+			array_push($result, $temp);
+		}
+		$this->log(' SORT TYPE : '. $this->request->data('content')['sort_type']);
+		$this->log($result);
+		$this->response->type('json');
+		$this->response->body(json_encode($result));
 		$this->response->send();
 		$this->_stop();
 	}

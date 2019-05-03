@@ -29,7 +29,7 @@
 					$res = $currencyAmount;
 					break;
 				case 'IDR':
-					$res = round(($currencyAmount / 130), 2);
+					$res = ($currencyAmount / 130); //round(($currencyAmount / 130), 2);
 					break;
 				case 'USD':
 					$res = round(($currencyAmount / 0.009), 2); 

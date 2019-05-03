@@ -41,6 +41,9 @@ $url = $this->request->base . '/tests/converterUtil';
 		content: "<";
 		font-weight: bold;
 	}
+	#sort-number:hover, #sort-date:hover{
+		cursor: pointer;
+	}
 </style>
 
 <div class="dropdown show text-right">
@@ -79,8 +82,8 @@ $url = $this->request->base . '/tests/converterUtil';
 <div>
 	<table id="myTable" style="margin-top: 80px; color: black;">
 		<tr class="bg-info">
-			<td style="text-align: center;"> <?php echo __('No') ;?> </td>
-			<td style="text-align: center;"> <?php echo __('Date') ;?> </td>
+			<td style="text-align: center;"> <?php echo __('No') ;?> <i class="fa fa-fw fa-sort" id="sort-number"></i></td>
+			<td style="text-align: center;"> <?php echo __('Date') ;?> <i class="fa fa-fw fa-sort" id="sort-date"></i> </td>
 			<td style="text-align: center;"> <?php echo __('Curreny') ;?> </td>
 		</tr>
 	<?php 
@@ -151,6 +154,7 @@ $( function() {
 
 <script type="text/javascript">
 	var fixDate = '';
+	var sortNumberType = 'DESC';
 	$( document ).ready(function() {
     	$( "input:text" ).focus(function() {
 		  $( "input:text" ).css("border-color", '#ced4da');
@@ -219,7 +223,6 @@ $( function() {
 			'timezone': '<?php echo $timezone; ?>',
 			'curr': '<?php echo $curr; ?>' 
 		};		
-		console.log(param);
 		$.ajax({
 			type: "POST"
 			, data: {'content': param}
@@ -273,4 +276,59 @@ $( function() {
 		$('#input-date').val('');
 		$( "#money-amount" ).val('');
 	}
+
+	$('#sort-number').click(function () {
+		var param = {
+			'sort_type': sortNumberType,
+			'sort_param': 'id',			
+			'locale': '<?php echo $locale; ?>',
+			'timezone': '<?php echo $timezone; ?>',
+			'curr': '<?php echo $curr; ?>' 
+		}
+		$.ajax({
+			type: "POST"
+			, data: {'content': param}
+			, url: "<?php echo $this->request->base.'/tests/sortNumber'?>"
+			, success: function (res) {
+				var rawData = JSON.parse(JSON.stringify(res));
+				console.log(rawData);
+				$('#myTable').find("tr:gt(0)").remove();
+				var size = rawData.length;
+				console.log('size : ' + size);
+				console.log('current sorting : ' + sortNumberType);
+				if (sortNumberType == 'ASC') {
+					for(var i = 0; i < size; i++) {
+						var lastRow = $('#myTable tr:last');
+						console.log(rawData[i].id);
+						lastRow.after(
+							'<tr data-id='+ (i + 1) +'> ' + 
+							' <td style="text-align: center;"> ' + (i + 1) +' </td> ' +
+							' <td style="text-align: center;"> ' + rawData[i].date_input + ' </td>' +
+							' <td style="text-align: center;"> ' + rawData[i].currency_amount + ' </td>' +
+							'</tr>'
+						);
+
+					}
+					sortNumberType = 'DESC'
+				} else {
+					// TYPE HERE IS ONLY DESC
+					for(var i = 0; i < size; i++) {
+						var lastRow = $('#myTable tr:last');
+						console.log(rawData[(size-1)].id);
+						lastRow.after(
+							'<tr data-id='+ (size - i) +'> ' + 
+							' <td style="text-align: center;"> ' + (size - i) +' </td> ' +
+							' <td style="text-align: center;"> ' + rawData[i].date_input + ' </td>' +
+							' <td style="text-align: center;"> ' + rawData[i].currency_amount + ' </td>' +
+							'</tr>'
+						);
+
+					}
+					sortNumberType = 'ASC'
+				}
+			}
+			, error: function (err) {
+			}
+		});
+	});
 </script>
