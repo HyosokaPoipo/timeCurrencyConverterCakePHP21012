@@ -10,7 +10,7 @@ class ConverterHelper extends AppHelper {
 		$this->locale = $locale;
 		$this->timezone = $timezone;
 		$this->currency = $currency;
-		setlocale(LC_ALL, $locale);		
+		setlocale(LC_ALL, $locale);
 
 		$this->utilConverter = new ConverterUtil();
 		$this->utilConverter->init($locale, $timezone, $currency);	

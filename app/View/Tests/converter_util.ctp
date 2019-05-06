@@ -84,7 +84,7 @@ $url = $this->request->base . '/tests/converterUtil';
 		<tr class="bg-info">
 			<td style="text-align: center;"> <?php echo __('No') ;?> <i class="fa fa-fw fa-sort" id="sort-number"></i></td>
 			<td style="text-align: center;"> <?php echo __('Date') ;?> <i class="fa fa-fw fa-sort" id="sort-date"></i> </td>
-			<td style="text-align: center;"> <?php echo __('Curreny') ;?> </td>
+			<td style="text-align: center;"> <?php echo __('Currency') ;?> </td>
 		</tr>
 	<?php 
 		$this->Converter->init($locale, $timezone, $curr);

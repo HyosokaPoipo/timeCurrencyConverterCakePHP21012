@@ -29,7 +29,7 @@
 					$res = $currencyAmount;
 					break;
 				case 'IDR':
-					$res = ($currencyAmount / 130); //round(($currencyAmount / 130), 2);
+					$res = round(($currencyAmount / 130), 2); // ($currencyAmount / 130); 
 					break;
 				case 'USD':
 					$res = round(($currencyAmount / 0.009), 2); 
@@ -62,6 +62,10 @@
 
 		public function getCurrency() {
 			return $this->currency;
+		}
+
+		public function dayAsSql($date) {
+			return CakeTime::dayAsSql($date, 'modified');
 		}
 	}
 ?>

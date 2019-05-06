@@ -167,6 +167,7 @@ class TestsController extends AppController {
 		$this->set('locale', $this->myLocale);
 		$this->set('timezone', $this->myTimezone);
 		$this->set('curr', $this->myCurr);
+		$this->log('date sql ====================================' . $this->myConverter->dayAsSql(new DateTime));
 	}
 
 	public function changeLanguage(){
