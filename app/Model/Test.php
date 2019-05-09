@@ -11,7 +11,7 @@ class Test extends AppModel {
 	        )
     	),
     	'date_input' => array(
-	        'rule' => 'date',
+	        'rule' => 'datetime',
 	        'allowEmpty' => false,
 	        'message' => 'DateError'
     	)

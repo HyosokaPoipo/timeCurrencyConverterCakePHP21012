@@ -192,12 +192,13 @@ $url = $this->request->base . '/tests/converterUtil';
 	function saveTest() {
 		var tempDate = new Date($('#input-date').val());
 		var param = {
-			'date_input': tempDate.getFullYear() + '/' + (tempDate.getMonth()+1) + '/'+ tempDate.getDate(),
+			'date_input': tempDate.getFullYear() + '/' + (tempDate.getMonth()+1) + '/'+ tempDate.getDate() +' 23:00:00',
 			'currency_amount': $("#money-amount").val(),
 			'locale': '<?php echo $locale; ?>',
 			'timezone': '<?php echo $timezone; ?>',
 			'curr': '<?php echo $curr; ?>' 
-		};		
+		};	
+		console.log(param);	
 		$.ajax({
 			type: "POST"
 			, data: {'content': param}
@@ -237,6 +238,8 @@ $url = $this->request->base . '/tests/converterUtil';
 						'</tr>'
 					);
 				}
+				$('#input-date').val('');
+				$( "#money-amount" ).val('');
 			}	
 			, error: function (err) {
 				var errorRaw = JSON.parse(JSON.stringify(err));
