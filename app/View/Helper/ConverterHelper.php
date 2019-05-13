@@ -16,6 +16,10 @@ class ConverterHelper extends AppHelper {
 		$this->utilConverter->init($locale, $timezone, $currency);	
 	}
 
+	public function getTimezone() {
+		return $this->timezone;
+	}
+
 	public function convertCurrency($currencyAmount) {
 		return CakeNumber::currency($currencyAmount, $this->currency);
 	}
